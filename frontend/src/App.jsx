@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const API_URL = "https://ai-resume-analyzer-k25z.onrender.com";
+
 const scoreColor = (s) => (s >= 75 ? "var(--good)" : s >= 50 ? "var(--mid)" : "var(--bad)");
 
 function Score({ value, verdict }) {
@@ -65,7 +67,11 @@ export default function App() {
   const [history, setHistory] = useState([]);
   const [drag, setDrag] = useState(false);
 
-  const loadHistory = () => fetch("/api/history").then((r) => r.json()).then(setHistory).catch(() => {});
+  const loadHistory = () =>
+  fetch(`${API_URL}/api/history`)
+    .then((r) => r.json())
+    .then(setHistory)
+    .catch(() => {});
   useEffect(() => { loadHistory(); }, []);
 
   async function analyze() {
@@ -76,7 +82,10 @@ export default function App() {
     try {
       const fd = new FormData();
       fd.append("resume", file); fd.append("jobTitle", title || "Untitled role"); fd.append("jobDescription", jd);
-      const r = await fetch("/api/analyze", { method: "POST", body: fd });
+    const r = await fetch(`${API_URL}/api/analyze`, {
+  method: "POST",
+  body: fd,
+});
       const j = await r.json();
       if (!r.ok) throw new Error(j.error);
       setData(j); loadHistory();
@@ -85,7 +94,10 @@ export default function App() {
     setBusy(false);
   }
 
-  const openOld = (id) => fetch("/api/analysis/" + id).then((r) => r.json()).then(setData);
+ const openOld = (id) =>
+  fetch(`${API_URL}/api/analysis/${id}`)
+    .then((r) => r.json())
+    .then(setData);
 
   return (
     <main>

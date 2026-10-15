@@ -6,6 +6,12 @@ const pdf = require("pdf-parse");
 const { initDb, q } = require("./db");
 
 const app = express();
+app.get("/", (req, res) => {
+  res.json({
+    message: "AI Resume Analyzer API is running!",
+    status: "success"
+  });
+});
 app.use(cors());
 app.use(express.json());
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });

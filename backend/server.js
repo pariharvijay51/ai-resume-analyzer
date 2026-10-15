@@ -12,7 +12,14 @@ app.get("/", (req, res) => {
     status: "success"
   });
 });
-app.use(cors());
+
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://ai-resume-analyzer-1.onrender.com"
+  ]
+}));
+
 app.use(express.json());
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });
 

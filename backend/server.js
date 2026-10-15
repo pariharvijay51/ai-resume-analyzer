@@ -13,12 +13,14 @@ app.get("/", (req, res) => {
   });
 });
 
+
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://ai-resume-analyzer-1.onrender.com"
+    "https://ai-resume-analyzer-1-es5u.onrender.com"
   ]
 }));
+
 
 app.use(express.json());
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024 } });
